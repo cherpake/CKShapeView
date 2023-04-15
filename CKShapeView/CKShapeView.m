@@ -73,14 +73,18 @@
 
     NSInteger count;
     [path getLineDash:NULL count:&count phase:NULL];
+    if ( count < 1 ) {
+        return;
+    }
+    
     CGFloat pattern[count], phase;
     [path getLineDash:pattern count:NULL phase:&phase];
-
+    
     NSMutableArray *lineDashPattern = [NSMutableArray array];
     for (NSUInteger i = 0; i < count; i++) {
         [lineDashPattern addObject:@(pattern[i])];
     }
-
+    
     self.layer.lineDashPattern = [lineDashPattern copy];
     self.layer.lineDashPhase = phase;
 }
